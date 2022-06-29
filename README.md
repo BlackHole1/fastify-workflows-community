@@ -25,15 +25,15 @@ on:
 
 jobs:
   npm:
-    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugins-ci-npm.yml@v1
+    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-npm.yml@v1
     with:
       lint: true
 
   yarn:
-    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugins-ci-yarn.yml@v1
+    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-yarn.yml@v1
 
   pnpm:
-    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugins-ci-pnpm.yml@v1
+    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-pnpm.yml@v1
 ```
 
 ### Inputs
