@@ -54,11 +54,11 @@ jobs:
 
       - name: Install dependencies
         if: ${{ inputs.lint == true}}
-        run: ${{ input.install-script }}
+        run: ${{ inputs.install-script }}
 
       - name: Lint code
         if: ${{ inputs.lint == true}}
-        run: ${{ input.lint-script }}
+        run: ${{ inputs.lint-script }}
 
   test:
     name: Test
@@ -82,7 +82,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install dependencies
-        run: ${{ input.install-script }}
+        run: ${{ inputs.install-script }}
 
       - name: Run tests
-        run: ${{ input.test-script }}
+        run: ${{ inputs.test-script }}
