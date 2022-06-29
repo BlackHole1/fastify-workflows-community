@@ -1,0 +1,88 @@
+name: Plugin CI With Yarn
+
+on:
+  workflow_call:
+    inputs:
+      lint:
+        description: 'Set to true to run linting scripts.'
+        required: false
+        default: false
+        type: boolean
+      lint-node-version:
+        description: 'Version of node to install for lint script.'
+        required: false
+        default: '16'
+        type: string
+      lint-script:
+        description: 'Yarn run lint script'
+        required: false
+        default: 'yarn run lint'
+        type: string
+      install-script:
+        description: 'Yarn run install script'
+        required: false
+        default: 'yarn install --ignore-scripts --frozen-lockfile'
+        type: string
+      test-script:
+        description: 'Yarn run test script'
+        required: false
+        default: 'yarn run test'
+        type: string
+
+jobs:
+  linter:
+    name: Lint Code
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Skip lint
+        if: ${{ inputs.lint == false}}
+        run: exit 0
+
+      - name: Check out repo
+        if: ${{ inputs.lint == true}}
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Setup Node
+        if: ${{ inputs.lint == true}}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ inputs.lint-node-version }}
+
+      - name: Install dependencies
+        if: ${{ inputs.lint == true}}
+        run: ${{ input.install-script }}
+
+      - name: Lint code
+        if: ${{ inputs.lint == true}}
+        run: ${{ input.lint-script }}
+
+  test:
+    name: Test
+    needs: linter
+    runs-on: ${{ matrix.os }}
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        node-version: [14, 16, 18]
+        os: [macos-latest, ubuntu-latest, windows-latest]
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
+
+      - name: Setup Yarn (Node Version ${{ matrix.node-version }})
+        uses: DerYeger/yarn-setup-action@master
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - name: Install dependencies
+        run: ${{ input.install-script }}
+
+      - name: Run tests
+        run: ${{ input.test-script }}
