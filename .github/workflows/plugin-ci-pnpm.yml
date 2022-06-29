@@ -82,7 +82,7 @@ jobs:
           persist-credentials: false
 
       - name: Install pnpm
-        uses: pnpm/action-setup@2.2.2
+        uses: pnpm/action-setup@v2.2.2
         with:
           version: ${{ inputs.pnpm-version}}
 
