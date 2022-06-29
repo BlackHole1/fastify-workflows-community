@@ -25,15 +25,15 @@ on:
 
 jobs:
   npm:
-    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-npm.yml@v1
+    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-npm.yml@v1.1
     with:
       lint: true
 
   yarn:
-    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-yarn.yml@v1
+    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-yarn.yml@v1.1
 
   pnpm:
-    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-pnpm.yml@v1
+    uses: BlackHole1/fastify-workflows-community/.github/workflows/plugin-ci-pnpm.yml@v1.1
 ```
 
 ### Inputs
@@ -46,7 +46,8 @@ jobs:
 | `lint-node-version` | false    | string  | `16`                           | Version of node to install for lint script.                              |
 | `lint-script`       | false    | string  | `npm run lint`                 | npm run lint script.                                                     |
 | `install-script`    | false    | string  | `npm install --ignore-scripts` | npm run install script.                                                  |
-| `test-script`       | false    | string  | `npm run test`                 | npm run test script.                                                     |
+| `test-script`       | false    | string  | `npm run test:ci`              | npm run test script.                                                     |
+| `coveralls`         | false    | boolean | `false`                        | enable coveralls.                                                        |
 
 #### yarn
 
@@ -56,18 +57,20 @@ jobs:
 | `lint-node-version` | false    | string  | `16`                                              | Version of node to install for lint script.                              |
 | `lint-script`       | false    | string  | `yarn run lint`                                   | Yarn run lint script.                                                    |
 | `install-script`    | false    | string  | `yarn install --ignore-scripts --frozen-lockfile` | Yarn run install script.                                                 |
-| `test-script`       | false    | string  | `yarn run test`                                   | Yarn run test script.                                                    |
+| `test-script`       | false    | string  | `yarn run test:ci`                                | Yarn run test script.                                                    |
+| `coveralls`         | false    | boolean | `false`                                           | enable coveralls.                                                        |
 
 #### pnpm
 
 | Input Name          | Required | Type    | Default                         | Description                                                              |
 | ------------------- | -------- | ------- | ------------------------------- | ------------------------------------------------------------------------ |
-| `lint`              | false    | boolean | `false`                         | Set to `true` to run the `lint` script in a repository's `package.json`. |
-| `lint-node-version` | false    | string  | `16`                            | Version of node to install for lint script.                              |
+| `lint`              | false    | boolean | `false`                         | set to `true` to run the `lint` script in a repository's `package.json`. |
+| `lint-node-version` | false    | string  | `16`                            | version of node to install for lint script.                              |
 | `lint-script`       | false    | string  | `pnpm run lint`                 | pnpm run lint script.                                                    |
 | `install-script`    | false    | string  | `pnpm install --ignore-scripts` | pnpm run install script.                                                 |
-| `test-script`       | false    | string  | `pnpm run test`                 | pnpm run test script.                                                    |
-| `pnpm-version`      | false    | string  | `7.4.0`                         | install pnpm version.                                                    |
+| `test-script`       | false    | string  | `pnpm run test:ci`              | pnpm run test script.                                                    |
+| `coveralls`         | false    | string  | `false`                         | enable coveralls.                                                        |
+| `pnpm-version`      | false    | boolean | `7.4.0`                         | install pnpm version.                                                    |
 
-[fastify/workflows]: (https://github.com/fastify/workflows)
-[fastify/workflows#36]: (https://github.com/fastify/workflows/pull/36)
+[fastify/workflows]: https://github.com/fastify/workflows
+[fastify/workflows#36]: https://github.com/fastify/workflows/pull/36
