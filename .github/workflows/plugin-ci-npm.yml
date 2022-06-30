@@ -4,12 +4,12 @@ on:
   workflow_call:
     inputs:
       lint:
-        description: 'Set to true to run linting scripts.'
+        description: 'set to true to run linting scripts.'
         required: false
         default: false
         type: boolean
       lint-node-version:
-        description: 'Version of node to install for lint script.'
+        description: 'version of node to install for lint script.'
         required: false
         default: '16'
         type: string
@@ -26,8 +26,13 @@ on:
       test-script:
         description: 'npm run test script'
         required: false
-        default: 'npm run test'
+        default: 'npm run test:ci'
         type: string
+      coveralls:
+        description: 'enable coveralls'
+        required: false
+        default: false
+        type: boolean
 
 jobs:
   linter:
@@ -86,3 +91,23 @@ jobs:
 
       - name: Run tests
         run: ${{ inputs.test-script }}
+
+      - name: Coveralls Parallel
+        if: inputs.coveralls
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          flag-name: run-${{ matrix.os }}-${{ matrix.node-version }}
+          parallel: true
+
+  coveralls-finish:
+    name: Coveralls Finished Report
+    if: inputs.coveralls
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Coveralls Finished
+        uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.github_token }}
+          parallel-finished: true
