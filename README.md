@@ -1,5 +1,8 @@
 # fastify-workflows-community
 
+> **Warning**  
+> Move to [fastify-userland/workflows](https://github.com/fastify-userland/workflows)
+
 This is the github workflows for the fastify plugin community.
 
 Inspired by: [fastify/workflows](fastify/workflows)
